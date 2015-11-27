@@ -73,6 +73,7 @@ h1 {
     background-color: #14A697;
 /*    border: 1px solid yellow;*/
     overflow: hidden;
+    margin-top: 60px;
 }
 
 .continer_score{
