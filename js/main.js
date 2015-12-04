@@ -1,3 +1,6 @@
+var cols = 5;
+var rows = 5;
+var heroes = 5;
 var board = new Array();
 
 $(function () {
@@ -7,24 +10,30 @@ $(function () {
 function newgame() {
     //initialize the check board
     init();
-    //Generate 2 random numbers in 2 random locations
+    //Generate 4 random numbers in 4 random locations
+    generateOneNumber();
+    generateOneNumber();
     generateOneNumber();
     generateOneNumber();
 }
 
 
 function init() {
+
+    $("#grid-container").height(getPosLeft(cols, rows) - 40);
+    $("#grid-container").width(getPosTop(cols, rows) - 40);
+
 	//Define a 2D data set
     //i stands for the ROW of 4*4 check board
-	for (var i = 0; i < 4; i++) {
+	for (var i = 0; i < rows; i++) {
     	board[i] = new Array();
     	//J stands for the COLUMN of 4*4 check board
-    	for (var j = 0; j < 4; j++) {
+    	for (var j = 0; j < cols; j++) {
 
     		//Initialize default value of each cell = 0
-    		board[i][j] = 0;
+    		board[i][j] = Math.floor(Math.random()*heroes);
     		//Use i & j to located each cell
-    		var gridCell = $("#grid-cell-" + i + "-" + j);
+    		var gridCell = $('<div class="grid-cell" id="grid-cell-' + i + '-' + j + '">').appendTo("#grid-container");
 
         	//Use getPosTop() to set the distance between every grid and top
     		gridCell.css("top", getPosTop(i, j));
@@ -39,10 +48,16 @@ function init() {
 }
 
 function updateBoardView(){
-    $(".number-cell").remove();
-    for(var i=0;i<4;i++){
-        for(var j=0;j<4;j++) {
-            $("#grid-container").append("<div class='number-cell' id='number-cell-" + i + "-" + j + "'></div>");
+    //$(".number-cell").remove();
+    for(var i=0;i<rows;i++){
+        for(var j=0;j<cols;j++) {
+
+
+            
+            $('#grid-cell-' + i + '-' + j).append('<img src="img/Superheroes/'+board[i][j]+'.png">');
+           
+
+            /*$("#grid-container").append("<div class='number-cell' id='number-cell-" + i + "-" + j + "'></div>");
             var numberCell = $("#number-cell-" + i + "-" + j);
             //If the height of check board = 0, set the width & height of number cells = 0 
             if (board[i][j] == 0) {
@@ -60,12 +75,10 @@ function updateBoardView(){
                 numberCell.css("background-color", getNumberBackgroundColor(board[i][j]));
                 numberCell.css("color", getNumberColor(board[i][j]));
                 numberCell.text(board[i][j]);
-            }
+            }*/
         }
     }
 }
-
-
 
 
 
