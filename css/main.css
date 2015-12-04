@@ -67,13 +67,65 @@ h1 {
     color: #ddd;
 }
 
+#newgamebutton {
+    color: white;
+    text-decoration: none;
+    display: block;
+    margin: 20px auto;
+    width: 100px;
+    padding: 10px 10px;
+    background-color: #8f7a66;
+    font-family: Arial;
+    border-radius: 5px;
+    
+}
+
+#newgamebutton:hover {
+    background-color: #9f8b77;
+}
+
+header p {
+    font-family: Arial;
+    font-size: 25px;
+    margin: 20px auto;
+}
+
+/*CSS of the back board*/
+#grid-container {
+    width: 460px;
+    height: 460px;
+    padding: 20px;
+    margin: 50px auto;
+    background-color: #14A697;
+    border-radius: 10px;
+    position: relative;
+}
+
+
+/*CSS of 16 boxes*/
+.grid-cell {
+    width: 100px;
+    height: 100px;
+    border-radius: 6px;
+    background-color: #2C3E50;
+    position: absolute;
+}
+
+
+
+
+
+
+
+
+
+
 .container {
     width: 50%;
     margin: 0 auto;
     background-color: #14A697;
 /*    border: 1px solid yellow;*/
     overflow: hidden;
-    margin-top: 60px;
 }
 
 .continer_score{
@@ -83,7 +135,7 @@ h1 {
 /*    border: 1px solid blue;*/
 }
 
-h2 {
+p {
     float: right;
     margin-right: 15%;
     color: white;
