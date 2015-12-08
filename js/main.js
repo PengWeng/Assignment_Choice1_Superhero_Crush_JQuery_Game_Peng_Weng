@@ -1,3 +1,13 @@
+/*
+PROBLEMS NEED TO BE SOLVED:
+
+add check when swapping
+remove images on match
+	drop new images
+	increment score 
+add swap animation
+
+*/
 var cols = 5;
 var rows = 5;
 var heroes = 5;
@@ -8,26 +18,81 @@ $(function () {
 });
 
 function newgame() {
+
     //initialize the check board
     init();
-    //Generate 4 random numbers in 4 random locations
-    generateOneNumber();
-    generateOneNumber();
-    generateOneNumber();
-    generateOneNumber();
+
+    var state = 0; // 0 is cell1 not clicked, 1 is clicked
+	var cell1 = {row: 0, col: 0};
+	var cell2 = {row: 0, col: 0};
+
+    $(".grid-cell").click(function(){
+
+	    // get row/col index
+		var id = $(this).attr('id');
+		var row = parseInt(id.substring(10, 11));
+		var col = parseInt(id.substring(12));
+
+		// setup first cell
+		if (!state){
+
+			state = 1;
+			cell1.row = row;
+			cell1.col = col;
+		}
+
+		// setup second cell
+		else {
+
+			cell2.row = row;
+			cell2.col = col;
+
+			swap(cell1, cell2);
+			state = 0;
+		}
+    });
+
 }
 
+function swap(cell1, cell2){
+
+	/*if (!check(cell1, cell2)){
+
+		alert("Cells not each to each other.");
+	} 
+
+	else {
+
+
+	}*/
+
+	//update board
+	temp = board[cell1.row][cell1.col];
+	board[cell1.row][cell1.col] = board[cell2.row][cell2.col];
+	board[cell2.row][cell2.col] = temp;
+
+	//update picture
+	updateBoardView();
+
+}
+
+/*function check(cell1, cell2){
+
+
+}*/
 
 function init() {
-
+	
+	$(".grid-cell").remove();
     $("#grid-container").height(getPosLeft(cols, rows) - 40);
     $("#grid-container").width(getPosTop(cols, rows) - 40);
 
 	//Define a 2D data set
-    //i stands for the ROW of 4*4 check board
+    //i stands for the ROW of the check board
 	for (var i = 0; i < rows; i++) {
+
     	board[i] = new Array();
-    	//J stands for the COLUMN of 4*4 check board
+    	//J stands for the COLUMN of the check board
     	for (var j = 0; j < cols; j++) {
 
     		//Initialize default value of each cell = 0
@@ -42,109 +107,18 @@ function init() {
         }
     }
 
-
-
     updateBoardView();
 }
 
 function updateBoardView(){
-    //$(".number-cell").remove();
+	
+	$(".grid-cell img").remove();
+
     for(var i=0;i<rows;i++){
         for(var j=0;j<cols;j++) {
 
-
-            
+            // append new one
             $('#grid-cell-' + i + '-' + j).append('<img src="img/Superheroes/'+board[i][j]+'.png">');
-           
-
-            /*$("#grid-container").append("<div class='number-cell' id='number-cell-" + i + "-" + j + "'></div>");
-            var numberCell = $("#number-cell-" + i + "-" + j);
-            //If the height of check board = 0, set the width & height of number cells = 0 
-            if (board[i][j] == 0) {
-                numberCell.css("width", "0px");
-                numberCell.css("height", "0px");
-                numberCell.css("top", getPosTop(i, j) + 50);
-                numberCell.css("left", getPosLeft(i, j) + 50);
-            }
-            //If the height of check board != 0, set the width & height of number cells = 75, background & foreground colors & number
-            else {
-                numberCell.css("width", "100px");
-                numberCell.css("height", "100px");
-                numberCell.css("top", getPosTop(i, j));
-                numberCell.css("left", getPosLeft(i, j));
-                numberCell.css("background-color", getNumberBackgroundColor(board[i][j]));
-                numberCell.css("color", getNumberColor(board[i][j]));
-                numberCell.text(board[i][j]);
-            }*/
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-// $(document).ready(function(){
-
-
-// // 	$(".boxbatman").click(function(){
-// // 		$(".boxbatman").removeClass("boxbatman");
-// // 	});
-
-// // 	$(".boxironman").click(function(){
-// // 		$(".boxironman").removeClass("boxironman");
-// // 	});
-
-
-// // $(".boxcaptainamerica").click(function(){
-// // 		$(".boxcaptainamerica").removeClass("boxcaptainamerica");
-// // 	});
-
-
-
-// var boxes = [
-// 	[1,2,3],
-// 	[4,5,6],
-// 	[7,8,9]
-// ];
-
-// if {
-// 	boxes[1][1]==boxes[2][1]
-// }
-
-
-
-
-// for (int r=0; r < boxeslength; r++) {
-// 	boxes[r]
-
-// 	for (int c=0; c<boxeslength;c++) {
-// 		boxes[r][c]==boxes[r][c+1]
-
-
-// 	}
-
-	
-
-// .
-// }
-
-
-
-
-
-
-
-
-
-
-
-// });
