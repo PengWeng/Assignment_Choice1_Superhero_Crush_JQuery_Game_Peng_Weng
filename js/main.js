@@ -67,7 +67,7 @@ function swap(cell1, cell2){
 	}*/
 
 	//update board
-	temp = board[cell1.row][cell1.col];
+	var temp = board[cell1.row][cell1.col];
 	board[cell1.row][cell1.col] = board[cell2.row][cell2.col];
 	board[cell2.row][cell2.col] = temp;
 
@@ -111,14 +111,71 @@ function init() {
 }
 
 function updateBoardView(){
+	// alert("start")
 	
 	$(".grid-cell img").remove();
+	var streak = [];
+	var heroes = [];
 
     for(var i=0;i<rows;i++){
+    	streak = [];
+    	heroes = [];
         for(var j=0;j<cols;j++) {
 
-            // append new one
-            $('#grid-cell-' + i + '-' + j).append('<img src="img/Superheroes/'+board[i][j]+'.png">');
+        	// append new one
+            var $hero = $('#grid-cell-' + i + '-' + j).append('<img src="img/Superheroes/'+board[i][j]+'.png">');
+
+            var streakover = function() {
+            	if (streak.length >= 3) {
+	        		$.each(heroes, function() {
+	        			$(this).fadeOut(1000);
+
+	        			// Reset values??
+
+	        		});
+	        	}
+            }
+
+
+        	// If the new item is the same as the last item, then add the new item
+        	if (streak.length && streak[streak.length-1] == board[i][j]) {
+	        	streak.push(board[i][j]);
+	        	heroes.push($hero);
+	        }
+	        else {
+	        	streakover();
+
+	        	// restart the streak
+	        	streak = [board[i][j]];
+	        	heroes = [$hero];
+	        }
+
+	        if (j == cols-1) {
+	        	streakover();
+	        }
+
+            
         }
     }
 }
+
+
+
+//timer function
+/*var count=30,
+var timer = setInterval (ticktouk, 1000),
+var ticktouk = function {
+	count --;
+
+	if (count <= 0) {
+		console.log("Game Over");
+		clearInterval (timer),
+		}
+
+	$('timer').text(count);
+
+	};
+
+
+
+}*/
