@@ -1,7 +1,5 @@
 /*
-PROBLEMS NEED TO BE SOLVED:
 
-add check when swapping
 remove images on match
 	drop new images
 	increment score 
@@ -56,30 +54,46 @@ function newgame() {
 
 function swap(cell1, cell2){
 
-	/*if (!check(cell1, cell2)){
+	if (!check(cell1, cell2) && !check(cell2, cell1)){
 
-		alert("Cells not each to each other.");
+		alert("Cells not next to each other.");
 	} 
 
 	else {
 
+		//update board
+		temp = board[cell1.row][cell1.col];
+		board[cell1.row][cell1.col] = board[cell2.row][cell2.col];
+		board[cell2.row][cell2.col] = temp;
 
-	}*/
-
-	//update board
-	var temp = board[cell1.row][cell1.col];
-	board[cell1.row][cell1.col] = board[cell2.row][cell2.col];
-	board[cell2.row][cell2.col] = temp;
-
-	//update picture
-	updateBoardView();
-
+		//update picture
+		updateBoardView();
+	}
 }
 
-/*function check(cell1, cell2){
+//checks if cell2 is above, below, to the left or right of cell1
+function check(cell1, cell2){
 
+	if (cell1.row == cell2.row){
 
-}*/
+		if (cell1.col + 1 == cell2.col || cell1.col - 1 == cell2.col)
+			return true;
+
+		else
+			return false;
+	}
+
+	if (cell1.col == cell2.col){
+
+		if (cell1.row + 1 == cell2.row || cell1.row - 1 == cell2.row)
+			return true;
+
+		else
+			return false;
+	}
+
+	return false;
+}
 
 function init() {
 	
@@ -116,14 +130,21 @@ function updateBoardView(){
 	$(".grid-cell img").remove();
 	var streak = [];
 	var heroes = [];
+	var allHeroes = new Array();
 
     for(var i=0;i<rows;i++){
     	streak = [];
     	heroes = [];
+    	allHeroes[i] = new Array();
+
         for(var j=0;j<cols;j++) {
 
         	// append new one
             var $hero = $('#grid-cell-' + i + '-' + j).append('<img src="img/Superheroes/'+board[i][j]+'.png">');
+            allHeroes[i].push($hero);
+
+            //console.log($hero);
+            //console.log(allHeroes[i][j]);
 
             var streakover = function() {
             	if (streak.length >= 3) {
@@ -153,29 +174,20 @@ function updateBoardView(){
 	        if (j == cols-1) {
 	        	streakover();
 	        }
-
-            
         }
     }
+
+     for(var x=0;x<3;x++){
+
+        for(var y=0;y<cols;y++) {
+
+        	if (board[x][y] == board[x+1][y] && board[x+1][y] == board[x+2][y]){
+
+        		$(allHeroes[x][y]).fadeOut(1000);
+        		$(allHeroes[x+1][y]).fadeOut(1000);
+        		$(allHeroes[x+2][y]).fadeOut(1000);
+        	}
+        }
+    }
+
 }
-
-
-
-//timer function
-/*var count=30,
-var timer = setInterval (ticktouk, 1000),
-var ticktouk = function {
-	count --;
-
-	if (count <= 0) {
-		console.log("Game Over");
-		clearInterval (timer),
-		}
-
-	$('timer').text(count);
-
-	};
-
-
-
-}*/
